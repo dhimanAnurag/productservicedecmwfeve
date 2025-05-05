@@ -1,5 +1,6 @@
 package com.scaler.productservicedecmwfeve.controllers;
 
+import com.scaler.productservicedecmwfeve.exceptions.ProductNotExistsException;
 import com.scaler.productservicedecmwfeve.models.Product;
 import com.scaler.productservicedecmwfeve.services.ProductService;
 import org.apache.coyote.Response;
@@ -34,10 +35,22 @@ public class ProductController {
        return response;
     }
 
-    @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable("id") Long id) {
-        return productService.getSingleProduct(id);
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotExistsException {
+//        throw new RuntimeException("SOmething went wrong");
+//        try {
+        return new ResponseEntity<>(
+                productService.getSingleProduct(id),
+                HttpStatus.OK
+        );
+//        } catch (ArithmeticException exception) {
+//            ResponseEntity<Product> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            return response;
+//        } catch (ArrayIndexOutOfBoundsException exception) {
+//
+//        }
+
     }
+
 
     @PostMapping()
     public Product addNewProduct(@RequestBody Product product) {

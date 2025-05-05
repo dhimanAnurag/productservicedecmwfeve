@@ -37,6 +37,8 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long id) {
+        int a = 1/0;
+
         FakeStoreProductDto productDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/" + id,
                 FakeStoreProductDto.class
@@ -76,6 +78,7 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product deleteProduct(Long id) {
+        int a = 1/0;
         RequestCallback requestCallback = restTemplate.httpEntityCallback( FakeStoreProductDto.class);
         FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, requestCallback, null);
         return convertFakeStoreProductToProduct(response);
