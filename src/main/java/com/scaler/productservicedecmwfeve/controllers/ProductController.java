@@ -5,6 +5,7 @@ import com.scaler.productservicedecmwfeve.models.Product;
 import com.scaler.productservicedecmwfeve.services.ProductService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class ProductController {
     private RestTemplate restTemplate;
 
     @Autowired
-    public ProductController(ProductService productService, RestTemplate restTemplate) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService, RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
     }
