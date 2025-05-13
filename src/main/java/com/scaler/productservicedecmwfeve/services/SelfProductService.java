@@ -40,7 +40,8 @@ public class SelfProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+       List<Product> allProducts = productRepository.findAll();
+       return allProducts;
     }
 
     @Override

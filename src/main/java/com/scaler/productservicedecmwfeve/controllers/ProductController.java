@@ -31,29 +31,18 @@ public class ProductController {
 
     @GetMapping() // localhost:8080/products
     public ResponseEntity<List<Product>> getAllProducts() {
-//        restTemplate.delete(null);
-
         ResponseEntity<List<Product>> response = new ResponseEntity<>(
-                productService.getAllProducts(), HttpStatus.FORBIDDEN
+                productService.getAllProducts(), HttpStatus.OK
         );
         return response;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotExistsException {
-//        throw new RuntimeException("SOmething went wrong");
-//        try {
-            return new ResponseEntity<>(
-                    productService.getSingleProduct(id),
-                    HttpStatus.OK
-            );
-//        } catch (ArithmeticException exception) {
-//            ResponseEntity<Product> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            return response;
-//        } catch (ArrayIndexOutOfBoundsException exception) {
-//
-//        }
-
+        return new ResponseEntity<>(
+                productService.getSingleProduct(id),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping()
