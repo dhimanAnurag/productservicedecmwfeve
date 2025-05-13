@@ -10,7 +10,7 @@ import lombok.Setter;
 @MappedSuperclass
 public class User {
     @Id
-    private Long Id;
+    private Long id;
     private String name;
     private String email;
 }

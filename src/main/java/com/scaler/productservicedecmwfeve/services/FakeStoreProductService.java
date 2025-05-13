@@ -1,9 +1,11 @@
 package com.scaler.productservicedecmwfeve.services;
 
 import com.scaler.productservicedecmwfeve.dtos.FakeStoreProductDto;
+import com.scaler.productservicedecmwfeve.exceptions.ProductNotExistsException;
 import com.scaler.productservicedecmwfeve.models.Category;
 import com.scaler.productservicedecmwfeve.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,9 @@ import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
@@ -37,30 +41,52 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(Long id) {
-        int a = 1/0;
-
+    public Product getSingleProduct(Long id) throws ProductNotExistsException {
+//        int a = 1 / 0;
         FakeStoreProductDto productDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/" + id,
                 FakeStoreProductDto.class
         );
-        if(productDto == null) {
-            return null;
+
+        if (productDto == null) {
+            throw new ProductNotExistsException(
+                    "Product with id: " + id + " doesn't exist."
+            );
         }
+
         return convertFakeStoreProductToProduct(productDto);
     }
 
+    @Override
     public List<Product> getAllProducts() {
 
-        FakeStoreProductDto[] productDto = restTemplate.getForObject(
+
+
+//        List<FakeStoreProductDto> response = restTemplate.getForObject(
+//                "https://fakestoreapi.com/products",
+//                List<FakeStoreProductDto>.class
+//        );
+
+        // runtime
+        FakeStoreProductDto[] response = restTemplate.getForObject(
                 "https://fakestoreapi.com/products",
                 FakeStoreProductDto[].class
         );
-        List<Product> products = new ArrayList<>();
-        for(FakeStoreProductDto dto : productDto) {
-            products.add(convertFakeStoreProductToProduct(dto));
+
+
+        List<Product> answer = new ArrayList<>();
+
+
+        for (FakeStoreProductDto dto: response) {
+            answer.add(convertFakeStoreProductToProduct(dto));
         }
-        return products;
+
+        return answer;
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        return null;
     }
 
     @Override
@@ -72,16 +98,22 @@ public class FakeStoreProductService implements ProductService {
         fakeStoreProductDto.setImage(product.getImageUrl());
 
         RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
-        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor = new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
+                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
         FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.PUT, requestCallback, responseExtractor);
+
         return convertFakeStoreProductToProduct(response);
     }
 
     @Override
-    public Product deleteProduct(Long id) {
-        int a = 1/0;
-        RequestCallback requestCallback = restTemplate.httpEntityCallback( FakeStoreProductDto.class);
-        FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, requestCallback, null);
-        return convertFakeStoreProductToProduct(response);
+    public Product addNewProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteProduct(Long id) {
+        return false;
     }
 }
+
+// Break till 10:35
