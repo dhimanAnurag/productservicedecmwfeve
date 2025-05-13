@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Product extends BaseModel {
     private String title;
-    private double price;
+    private Double price;
     @ManyToOne
     private Category category;
     private String description;
