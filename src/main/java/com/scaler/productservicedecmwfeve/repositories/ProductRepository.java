@@ -13,19 +13,6 @@ import java.util.Optional;
 public interface ProductRepository
     extends JpaRepository<Product, Long> {
 
-    List<Product> findByTitleContaining(String word);
-
-    long deleteByTitleIgnoreCase(String title);
-
-    List<Product> findByTitleAndDescription(String title,
-                                            String description);
-    List<Product> findByPriceBetween(double startRange, double endRange);
-
-    List<Product> findByCategory(Category category);
-
-    Product findByIdAndCategoryOrderByTitle(Long id, Category category);
-
-    List<Product> findByCategory_Id(Long id);
 
 
     Optional<Product> findById(Long id);
