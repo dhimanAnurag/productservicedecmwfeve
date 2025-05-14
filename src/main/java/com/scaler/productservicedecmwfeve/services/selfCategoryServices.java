@@ -32,4 +32,9 @@ public class selfCategoryServices implements CatergoryService{
        Category category = categoryOptional.get();
        return category;
     }
+
+    public Category addNewCategory(Category category) {
+       Category categorySaved = categoryRepository.save(category);
+       return categorySaved;
+    }
 }

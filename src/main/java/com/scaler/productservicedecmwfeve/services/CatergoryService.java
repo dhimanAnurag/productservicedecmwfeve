@@ -8,4 +8,5 @@ import java.util.List;
 public interface CatergoryService {
     List<Category> getAllCategories();
     Category getCategoryById(Long id) throws CategoryNotExistsException;
+    Category addNewCategory(Category category);
 }
