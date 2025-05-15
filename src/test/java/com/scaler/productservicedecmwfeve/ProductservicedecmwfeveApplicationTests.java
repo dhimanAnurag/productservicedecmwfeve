@@ -23,11 +23,12 @@ class ProductservicedecmwfeveApplicationTests {
     @Transactional
     @Commit
     void testQueries() {
-     List<ProductWithIdAndTitle> products = productRepository.someHpaExample();
+     List<ProductWithIdAndTitle> products = productRepository.someHpaExample(2L);
       for(ProductWithIdAndTitle product : products) {
           System.out.println(product.getId());
           System.out.println(product.getTitle());
           System.out.println(product.getDescription());
       }
+      List<ProductWithIdAndTitle> products1 = productRepository.nativeSqlQueryExample();
     }
 }

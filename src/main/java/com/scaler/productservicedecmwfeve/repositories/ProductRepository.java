@@ -5,6 +5,7 @@ import com.scaler.productservicedecmwfeve.models.Product;
 import com.scaler.productservicedecmwfeve.repositories.projections.ProductWithIdAndTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +19,10 @@ public interface ProductRepository
     Optional<Product> findById(Long id);
     // this will return a null ifno product matches the id
 
-    @Query("Select p.id as id , p.title as title, p.description as description from Product p where p.id = 2")
-     List<ProductWithIdAndTitle> someHpaExample();
+    @Query("Select p.id as id , p.title as title, p.description as description from Product p where p.id = :id")
+     List<ProductWithIdAndTitle> someHpaExample(@Param("id") Long id);
+    @Query(value = "select p.id as id, p.title as title from product p where p.id = 2", nativeQuery = true)
+     List<ProductWithIdAndTitle> nativeSqlQueryExample();
     Product save(Product product);
 }
 
