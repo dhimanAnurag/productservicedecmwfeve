@@ -15,6 +15,7 @@ public class Category extends BaseModel {
     @OneToMany(mappedBy = "category") // being already mapped the attribute called category
     private List<Product> products;
     private String name;
+    private String description;
 
 //    public String getName() {
 //        System.out.println( userName + " has called this method.");
