@@ -16,7 +16,8 @@ public class RandomTest {
 
     @Test
     void testTwoTwoZaFour() {
-
+       int i  = 2 * 2;
+       assertEquals(4, i);
     }
 
 
