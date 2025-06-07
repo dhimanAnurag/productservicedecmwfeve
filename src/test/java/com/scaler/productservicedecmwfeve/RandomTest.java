@@ -1,11 +1,12 @@
 package com.scaler.productservicedecmwfeve;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 public class RandomTest {
     @Test
     void testOnePlusOneIsTwo() {
@@ -17,7 +18,9 @@ public class RandomTest {
     @Test
     void testTwoTwoZaFour() {
        int i  = 2 * 2;
-       assertEquals(4, i);
+       assert i == 4;
+
+       assertEquals(i, 4);
     }
 
 
@@ -29,4 +32,4 @@ public class RandomTest {
 // Arrange
 // Act
 // Assert
-// A test case fails in any assertion within a test case fails
+// A test case fails in any assertion within  test case fails
