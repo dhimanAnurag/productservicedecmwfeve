@@ -1,6 +1,8 @@
 package com.scaler.productservicedecmwfeve.controllers;
 
+import com.scaler.productservicedecmwfeve.exceptions.ProductNotExistsException;
 import com.scaler.productservicedecmwfeve.models.Product;
+import com.scaler.productservicedecmwfeve.repositories.ProductRepository;
 import com.scaler.productservicedecmwfeve.services.ProductService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -22,6 +26,8 @@ class ProductControllerTest {
 
     @MockitoBean
     private ProductService productService = Mockito.mock(ProductService.class);
+    @MockitoBean
+    private ProductRepository productRepository;
 
     @Test
     void testProductsSameAsService() {
