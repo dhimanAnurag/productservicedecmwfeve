@@ -29,7 +29,8 @@ public class ProductController {
 
     @Autowired
     public ProductController(@Qualifier("selfProductService") ProductService productService,
-                  AuthenticationCommons authenticationCommons, RestTemplate restTemplate) {
+                             RestTemplate restTemplate,
+                             AuthenticationCommons authenticationCommons) {
         this.productService = productService;
         this.restTemplate = restTemplate;
         this.authenticationCommons = authenticationCommons;
@@ -66,18 +67,26 @@ public class ProductController {
         }
 
         ResponseEntity<List<Product>> response = new ResponseEntity<>(
-                finalProducts, HttpStatus.FORBIDDEN
+                finalProducts, HttpStatus.OK
         );
         return response;
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotExistsException {
+//        throw new RuntimeException("SOmething went wrong");
+//        try {
         return new ResponseEntity<>(
                 productService.getSingleProduct(id),
                 HttpStatus.OK
         );
+//        } catch (ArithmeticException exception) {
+//            ResponseEntity<Product> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            return response;
+//        } catch (ArrayIndexOutOfBoundsException exception) {
+//
+//        }
+
     }
 
     @PostMapping()
@@ -87,7 +96,7 @@ public class ProductController {
 
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+        return new Product();
     }
 
     @PutMapping("/{id}")
@@ -100,8 +109,8 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ExceptionHandler(ProductNotExistsException.class)
-    public ResponseEntity<Void> handleProductNotExistException() {
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
+//    @ExceptionHandler(ProductNotExistsException.class)
+//    public ResponseEntity<Void> handleProductNotExistException() {
+//        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//    }
 }
