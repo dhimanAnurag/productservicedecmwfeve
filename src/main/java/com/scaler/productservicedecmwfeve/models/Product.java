@@ -19,12 +19,4 @@ public class Product extends BaseModel {
     private Category category;
     private String description;
     private String imageUrl;
-//    private int sachinQuestionsAsked;
 }
-
-//  1     ->     1
-// Product : Category
-//  m     <-     1
-// --------------------
-//   m      :    1
-
