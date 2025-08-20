@@ -1,0 +1,12 @@
+  assignment/implementation-fakestore-api-with-database[m
+  feature/database-jpa-setup[m
+  feature/exception_handling[m
+  feature/get-single-product[m
+* [32mfeature/implementation-authentication[m
+  feature/self-product-service-implementation[m
+  feature/unit-testing[m
+  main[m
+  spike/HPA-queries[m
+  spike/Native-queries[m
+  spike/hql-sql-concept[m
+  spike/inheritance-in-database[m
