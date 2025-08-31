@@ -7,6 +7,8 @@ import com.scaler.productservicedecmwfeve.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -21,10 +23,13 @@ import java.util.List;
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+
 
     @Autowired
-    public FakeStoreProductService(RestTemplate restTemplate) {
+    public FakeStoreProductService(RestTemplate restTemplate , RedisTemplate<String, Object> redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProduct) {
@@ -42,7 +47,12 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotExistsException {
-//        int a = 1 / 0;
+
+//        Product p = (Product) redisTemplate.opsForHash().get("PRODUCTS" , "PRODUCT " + id);
+//
+//        if(p != null) {
+//            return p;
+//        }
         FakeStoreProductDto productDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/" + id,
                 FakeStoreProductDto.class
@@ -53,7 +63,8 @@ public class FakeStoreProductService implements ProductService {
                     "Product with id: " + id + " doesn't exist."
             );
         }
-
+//        Product p1 = convertFakeStoreProductToProduct(productDto);
+//        redisTemplate.opsForHash().put("PRODUCTS" , "PRODUCT " + id, p1);
         return convertFakeStoreProductToProduct(productDto);
     }
 
@@ -116,4 +127,3 @@ public class FakeStoreProductService implements ProductService {
     }
 }
 
-// Break till 10:35
